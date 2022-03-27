@@ -55,8 +55,9 @@
                         <label class="col-sm-12">Role</label>
                         <div class="col-sm-12">
                             <select class="form-control form-control-line" name="role">
-                                <option>Admin</option>
-                                <option>Project Manager</option>
+                            	<c:forEach var="role" items='${ roles }'>
+                            		<option>${ role.name }</option>
+                            	</c:forEach>
                             </select>
                         </div>
                     </div>

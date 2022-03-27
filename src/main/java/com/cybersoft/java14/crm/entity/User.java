@@ -8,7 +8,7 @@ public class User {
 	private String password;
 	private String phone;
 	private String address;
-	private String role;
+	private Role role;
 	
 	/* constructor */
 	public User() {
@@ -18,10 +18,10 @@ public class User {
 		this.name 	= "";
 		this.address 	= "";
 		this.phone 		= "";
-		this.role 	= "ROLE_MEMBER";
+		this.role 	= null;
 	}
 
-	public User(int id, String name, String email, String password, String phone, String address, String role) {
+	public User(int id, String name, String email, String password, String phone, String address, Role role) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
@@ -81,11 +81,11 @@ public class User {
 		this.address = address;
 	}
 
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 	

@@ -14,8 +14,11 @@ import com.google.gson.Gson;
 public class UserService {
 	private UserRepository repository;
 	
+	private RoleService roleService;
+	
 	public UserService() {
 		repository = new UserRepository();
+		roleService = new RoleService();
 	}
 	
 	public List<User> getListUsers() {
@@ -29,7 +32,9 @@ public class UserService {
 		us.setPassword(req.getParameter("password"));
 		us.setPhone(req.getParameter("phone"));
 		us.setAddress(req.getParameter("address"));
-		us.setRole(req.getParameter("role"));
+		
+		String roleName = req.getParameter("role");
+		us.setRole(roleService.getRoleByName(roleName));
 		
 		if (repository.insert(us) == 0) {
 			return false;
@@ -42,13 +47,13 @@ public class UserService {
 		return repository.getById(Integer.parseInt(id));
 	}
 
-	public boolean update(Object user) {
-		if(user instanceof User) {
-			repository.update((User) user);
-			return true;
-		}
-		return false;
-	}
+//	public boolean update(Object user) {
+//		if(user instanceof User) {
+//			repository.update((User) user);
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public void deteteUser(int deleteId) {
 		int result = repository.remove(deleteId);
@@ -58,6 +63,25 @@ public class UserService {
 			 */
 			return;
 		}
+	}
+
+	public void update(HttpServletRequest req) {
+		String userId = req.getParameter("id");
+		
+		User us = getById(userId);
+		if (us == null)
+			return;
+		
+		us.setName(req.getParameter("fullname"));
+		us.setEmail(req.getParameter("email"));
+		us.setPassword(req.getParameter("password"));
+		us.setPhone(req.getParameter("phone"));
+		us.setAddress(req.getParameter("address"));
+		
+		int roleId = Integer.parseInt(req.getParameter("role"));
+		us.setRole(roleService.getRoleById(roleId));
+		
+		repository.update(us);
 	}
 
 //	public void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {

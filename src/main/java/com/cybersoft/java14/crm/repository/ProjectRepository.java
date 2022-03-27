@@ -15,8 +15,8 @@ public class ProjectRepository {
 	
 	public List<Project> getAll() {
 		projects = new ArrayList<Project>();
-		String query = "select p.id, p.name, p.description, p.start_date, p.end_date, p.create_user \r\n"
-				+ "from crm_app.crm_project p";
+		String query = "select p.id, p.name, p.description, p.start_date, p.end_date, p.owner \r\n"
+				+ "from crm.project p";
 		
 		try (Connection conn = MySQLConnection.getConnection()) {
 			PreparedStatement statement = conn.prepareStatement(query);
@@ -44,7 +44,7 @@ public class ProjectRepository {
 	public int remove(int projectId) {
 		
 		try (Connection conn = MySQLConnection.getConnection()) {
-			String query = "DELETE FROM crm_project WHERE id=?";
+			String query = "DELETE FROM project WHERE id=?";
 			PreparedStatement statement = conn.prepareStatement(query);
 			statement.setInt(1, projectId);
 			statement.executeUpdate();

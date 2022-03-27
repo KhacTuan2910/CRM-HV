@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cybersoft.java14.crm.service.RoleService;
 import com.cybersoft.java14.crm.service.UserService;
 import com.cybersoft.java14.crm.util.JspConst;
 import com.cybersoft.java14.crm.util.UrlConst;
@@ -19,13 +20,17 @@ import com.cybersoft.java14.crm.util.UrlConst;
 		UrlConst.USER_UPDATE
 })
 public class UserServlet extends HttpServlet {
+	
 	private UserService service;
+	private RoleService roleService;
+	
 	private String action;
 	
 	@Override
 	public void init() throws ServletException {
 		super.init();
 		service = new UserService();
+		roleService = new RoleService();
 		action = "";
 	}
 	
@@ -42,6 +47,8 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch (action) {
 		case UrlConst.USER_ADD:
+			req.setAttribute("roles", roleService.getListRoles());
+			
 			req.getRequestDispatcher(JspConst.USER_ADD)
 				.forward(req, resp);
 			break;
@@ -54,6 +61,9 @@ public class UserServlet extends HttpServlet {
 			String userId = req.getParameter("id");
 			var user = service.getById(userId);
 			req.setAttribute("user", user);
+			
+			req.setAttribute("roles", roleService.getListRoles());
+			
 			req.getRequestDispatcher(JspConst.USER_UPDATE)
 				.forward(req, resp);
 			break;
@@ -75,6 +85,7 @@ public class UserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		switch (action) {
 		case UrlConst.USER_ADD:
+			
 			service.addUser(req);
 			break;
 		case UrlConst.USER_UPDATE:

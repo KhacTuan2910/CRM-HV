@@ -40,7 +40,7 @@
 									<td>${user.name}</td>
 									<td>${user.email}</td>
 									<td>${user.phone}</td>
-									<td>${user.role}</td>
+									<td>${user.role.name}</td>
 									<td><a
 										href='<c:url value="<%= UrlConst.USER_UPDATE %>" />?id=${ user.id }'
 										class="btn btn-sm btn-primary" id="btn-user-edit"

@@ -16,4 +16,13 @@ public class RoleService {
 		return repository.getAll();
 	}
 
+	public Role getRoleByName(String roleName) {
+		return repository.getRoleByName(roleName);
+	}
+
+	public Role getRoleById(int roleId) {
+		// TODO Auto-generated method stub
+		return repository.getRoleById(roleId);
+	}
+
 }
